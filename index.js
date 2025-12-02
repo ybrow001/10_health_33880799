@@ -52,15 +52,15 @@ const mainRoutes = require("./routes/main");
 app.use('/', mainRoutes);
 
 // -- use /users but keep limited to individuals users for their own profiles?
-const usersRoutes = require('./routes/users');
-app.use('/users', usersRoutes);
+const userRoutes = require('./routes/users');
+app.use('/users', userRoutes);
 
 // -- use /resources to link information about meditation, sutras, etc?
-const booksRoutes = require('./routes/resources');
-app.use('/resources', booksRoutes);
+const resourceRoutes = require('./routes/resources');
+app.use('/resources', resourceRoutes);
 
-const booksRoutes = require('./routes/features');
-app.use('/features', booksRoutes);
+const featureRoutes = require('./routes/features');
+app.use('/features', featureRoutes);
 
 // start listening on given port
 app.listen(port, () => console.log(`listening on port ${port}`));
