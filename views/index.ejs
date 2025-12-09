@@ -5,10 +5,23 @@
     <link rel="stylesheet"  type="text/css" href="/main.css" />
   </head>
   <body>
-    <h1><%=shopData.shopName%></h1>
-    <p><a href="about">about <%=shopData.shopName%></a></p>
-    <p><a href="users/login ">login!</a></p>
-    <p><a href="logout">logout</a></p>
-    <p><a href="users/register">sign up</a></p>
+    <header id="header">
+      <h1><%=shopData.shopName%></h1>
+      <h3> - meditation space - </h3>
+    </header>
+    <div id="links"> 
+      <a href="/about">about <%=shopData.shopName%></a>
+      <br>
+      <a href="/users/login ">login!</a>
+      <a href="/users/logout">logout</a>
+      <a href="/users/signup">sign up!</a>
+      <br>
+      <a href="/users/profile">my profile</a>
+      <br>
+      <a href="/tools/timer">timer</a>
+      <a href="/tools/calendar">my calendar</a>
+      <br>
+      <a href="/resources">reading corner</a>
+    </div>
   </body>
 </html>

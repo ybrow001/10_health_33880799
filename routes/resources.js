@@ -12,8 +12,8 @@ const redirectLogin = (req, res, next) => {
     } 
 }
 
-router.get('/public',function(req, res, next){
-    res.render(".ejs", {searchResult: null})
+router.get('/', function(req, res, next) {
+    res.render("resources.ejs", {searchResult: null})
 });
 
 router.get('/bookmarks', function (req, res, next) {

@@ -38,9 +38,9 @@ app.locals.shopData = {shopName: "mustardseed"};
 // database connection pool
 const db = mysql.createPool({
     host: 'localhost',
-    user: '',
+    user: 'health_app',
     password: 'qwertyuiop',
-    database: '',
+    database: 'health',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -48,19 +48,19 @@ const db = mysql.createPool({
 global.db = db;
 
 // load route handlers
-const mainRoutes = require("./routes/main");
+const mainRoutes = require('./routes/main');
 app.use('/', mainRoutes);
 
-// -- use /users but keep limited to individuals users for their own profiles?
 const userRoutes = require('./routes/users');
 app.use('/users', userRoutes);
+
+// -- user for timer and calendar
+const toolRoutes = require('./routes/tools');
+app.use('/tools', toolRoutes);
 
 // -- use /resources to link information about meditation, sutras, etc?
 const resourceRoutes = require('./routes/resources');
 app.use('/resources', resourceRoutes);
-
-const featureRoutes = require('./routes/features');
-app.use('/features', featureRoutes);
 
 // start listening on given port
 app.listen(port, () => console.log(`listening on port ${port}`));
