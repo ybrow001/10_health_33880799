@@ -8,6 +8,12 @@
     <header id="header">
       <h1><%=shopData.shopName%></h1>
       <h3> - meditation space - </h3>
+      <div id="search">
+        <form id="search_form" action="/search/home_search" method="GET">
+          <p> search <%=shopData.shopName%>: <input id="search_bar" type="text" name="home_search" placeholder="users & resources"p>
+          <input type="submit" value="search">
+        </form>
+      </div>
     </header>
     <div id="links"> 
       <a href="/about">about <%=shopData.shopName%></a>

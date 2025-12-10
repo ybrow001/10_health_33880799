@@ -51,6 +51,9 @@ global.db = db;
 const mainRoutes = require('./routes/main');
 app.use('/', mainRoutes);
 
+const searchRoutes = require('./routes/search');
+app.use('/search', searchRoutes);
+
 const userRoutes = require('./routes/users');
 app.use('/users', userRoutes);
 

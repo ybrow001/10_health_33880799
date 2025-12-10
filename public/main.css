@@ -35,6 +35,20 @@ body {
   border-color: lightgray;
 }
 
+#search {
+  display: block;
+  position: absolute;
+  width: fit-content;
+  top: 50%;
+  left: 70%;
+}
+
+#search_form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 #links {
   z-index: 1;
   display: flexbox;

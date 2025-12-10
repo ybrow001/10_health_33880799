@@ -19,22 +19,24 @@ router.get('/about',function(req, res, next){
     res.render('about.ejs')
 });
 
-router.get('/search',function(req, res, next){
-    res.render("search.ejs", {searchResult: null})
-});
+// router.get('/home_search',function(req, res, next){
+//     res.render("search.ejs", {searchResult: req.query.home_search})
+// });
 
-router.get('/search-result', function (req, res, next) {
-    let sqlQuery = `SELECT id, price, name FROM books`; // query database to get all books id, prcices and names
-    // execute sql query
+// router.get('/search/result', function (req, res, next) {
+//     let sqlQuery = `SELECT id, price, name FROM books`; // query database to get all books id, prcices and names
+//     // execute sql query
 
-    //searching in the database
-    db.query(sqlQuery, (err, result) => {
-        if (err) {
-            next(err)
-        }
-        res.render("search.ejs", {books: result, searchResult: req.query.search})
-    });
-});
+//     //searching in the database
+//     // db.query(sqlQuery, (err, result) => {
+//     //     if (err) {
+//     //         next(err)
+//     //     }
+//     //     res.render("search.ejs", {result: result, searchResult: req.query.search})
+//     // });
+
+//     res.render("search.ejs", {result: result, searchResult: req.query.search})
+// });
 
 // -- inlcude registration, login, logout in main?
 

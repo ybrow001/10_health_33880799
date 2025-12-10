@@ -1,1 +1,8 @@
 home=http://www.doc.gold.ac.uk/usr/414/
+about=http://www.doc.gold.ac.uk/usr/414/about
+search=http://www.doc.gold.ac.uk/usr/414/search
+login=http://www.doc.gold.ac.uk/usr/414/users/login
+signup=http://www.doc.gold.ac.uk/usr/414/users/signup
+timer=http://www.doc.gold.ac.uk/usr/414/tools/timer
+my_calendar=http://www.doc.gold.ac.uk/usr/414/tools/calendar
+reading_corner=http://www.doc.gold.ac.uk/usr/414/resources

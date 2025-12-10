@@ -1,26 +1,20 @@
 <!doctype html>
 <html>
   <head>
-    <title>Search <%=shopData.shopName%></title>
+    <title><%=shopData.shopName%></title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
   </head>
   <body>
-    <h1>Search <%=shopData.shopName%></h1>
-    <form action="search-result" method="GET">
-      <p>What book do you want?</p>
+    <h1>search <%=shopData.shopName%></h1>
+    <form action="result" method="GET">
+      <p>what would you like to find?</p>
       <input id="search-box" type="text" name="search">
-      <input type="submit" value="Search" >
+      <input type="submit" value="search" >
     </form>
     <div id="result">
-      <% if(searchResult != null) { %>
+      <% if(query_result != null) { %>
         <ul>
-          <% for(let i = 0; i < books.length; i++) { %>
-            <% if(books[i].name.includes(searchResult)) { %> 
-              <li> <%= `${books[i].name} - £${books[i].price}` %></li>
-            <% } else if(books[i].name.toLowerCase().includes(searchResult)){ %> 
-              <li> <%= `${books[i].name} - £${books[i].price}` %></li>
-            <% } %>
-          <% } %>
+          <li> <%= database_result[0].username %> </li>
         </ul>
       <% } %>
     </div>

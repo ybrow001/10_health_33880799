@@ -2,7 +2,7 @@
 <html>
   <head>
     <title><%=shopData.shopName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
+    <link rel="stylesheet"  type="text/css" href="/main.css"/>
   </head>
   <body>
     <h1><%=shopData.shopName%> meditation timer</h1>
@@ -10,8 +10,10 @@
         <p id="time">00:00</p>
         <button id="start">start</button>
         <button id="stop" disabled>stop</button>
-        <button id="reset" >reset</button>
-        <script src="/javascript/timer.js"></script>
+        <button id="lap" disabled>lap</button>
+        <button id="reset">reset</button>
+        <div id="show_laps"></div>
     </div>
+    <script src="/javascript/timer.js"></script>
   </body>
 </html>
