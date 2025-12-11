@@ -95,7 +95,7 @@ function (req, res, next) {
                         // maybe necessary for session - needed if displaying
 
                         req.session.userId = userId;
-                        res.send(`hello ${userId}, your login was successful!`)
+                        res.send(`hello ${sanitisedUsername}, your login was successful!`)
                         // render user profile
                     } else {
                         // redirect to login page, inject message

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // class loaded from FullCalendar
     const calendar = new FullCalendar.Calendar(calendarElement, {
         initialView: 'dayGridMonth',
-        events: "/tools/calendar/events",  // load events using GET route
+        events: "./tools/calendar/events",  // load events using GET route
         selectable: true,
         eventTimeFormat: {
             hour: '2-digit',
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const end = document.getElementById('event_end').value;
         const description = document.getElementById('event_description').value;
 
-        fetch('/tools/calendar/events', {
+        fetch('./tools/calendar/events', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({title, start, end, description})
