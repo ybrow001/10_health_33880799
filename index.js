@@ -26,6 +26,8 @@ app.use(session({
 // use ejs as templating engine
 app.set('view engine', 'ejs');
 
+app.use(express.json());
+
 // set up body parser 
 app.use(express.urlencoded({ extended: true }));
 

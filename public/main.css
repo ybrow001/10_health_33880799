@@ -9,6 +9,7 @@ html {
 
 
 body {
+  z-index: 1;
   display: flexbox;
   max-width: 100%;
   width: 100%;

@@ -1,7 +1,6 @@
-# Insert data into the tables
+-- insert test data into the tables
 
--- USE berties_books;
+USE health;
 
--- INSERT INTO books (name, price) VALUES ('Brighton Rock', 20.25),('Brave New World', 25.00), ('Animal Farm', 12.99);
-
--- INSERT INTO users (username, first_name, last_name, email, hashed_password) VALUES ('gold', 'gold', 'smiths', 'gs@gs.uk', '$2b$10$IPzYIKtMNKcnTkQF7kEGme3uYdSFumhkQJqFWsQKsSj5aVAy3yPcy');
+INSERT INTO users (username, hashed_password, email) VALUES ('gold', '$2b$10$IPzYIKtMNKcnTkQF7kEGme3uYdSFumhkQJqFWsQKsSj5aVAy3yPcy', 'gs@gs.uk');
+-- hashed password currently = smiths

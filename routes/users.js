@@ -70,7 +70,7 @@ router.post('/loggedin', [
 function (req, res, next) {
     let username = req.body.username;
     let plainPassword = req.body.password;
-    let sqlQuery = 'SELECT hashed_password FROM users WHERE username=?';
+    let sqlQuery = 'SELECT id, hashed_password FROM users WHERE username=?';
 
     let errors = validationResult(req);
 
@@ -81,18 +81,21 @@ function (req, res, next) {
             if(err) {
                 next(err)
             } else {
-                let hash = rows[0].hashed_password;
+                const userId = rows[0].id;
+                const hash = rows[0].hashed_password;
+                
             
                 bcrypt.compare(plainPassword, hash, function(err, result) {
                     if(err) {
                         next(err)
                     } else if(result == true) {
-                        let sanitisedUsername = req.sanitize(username); 
+                        const sanitisedUsername = req.sanitize(username); 
+
                         // sanitise username before creating session and before displaying
                         // maybe necessary for session - needed if displaying
 
-                        req.session.userId = sanitisedUsername;
-                        res.send(`hello ${sanitisedUsername}, your login was successful!`)
+                        req.session.userId = userId;
+                        res.send(`hello ${userId}, your login was successful!`)
                         // render user profile
                     } else {
                         // redirect to login page, inject message

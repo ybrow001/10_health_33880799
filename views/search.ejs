@@ -14,7 +14,13 @@
     <div id="result">
       <% if(query_result != null) { %>
         <ul>
-          <li> <%= database_result[0].username %> </li>
+          <li> 
+            <% if(database_result.length > 0) { %>
+              <%= database_result[0].username %>
+            <% } else { %>
+              search not found
+            <% } %> 
+          </li>
         </ul>
       <% } %>
     </div>
