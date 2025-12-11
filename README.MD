@@ -10,23 +10,20 @@ To install and run this application, in the command line on the machine it is be
 
 - git clone https://github.com/ybrow001/10_health_33880799
 
+To install the necessary modules and packages - automatically specified by the accompanying .json files.
 - npm install
- * To install the necessary modules and packages - automatically specified by the accompanying .json files.
 
-MySql2 must be installed on the machine. In the mysql command line execu the following commands:
 
+MySql2 must be installed on the machine. In the mysql command line execu the following commands to set up the database: 
 - source create_db.sql
- * To set up the database for the application.
-
+ 
+... and insert test data into the database:
 - source insert_test_data.sql
-* To insert test data into the database.
 
-Finally to run the application:
-
+Finally, to run the application locally:
 - node index.js
- * To run the application locally.
 
-node_modules in use:
+Node modules in use:
 - express
 - ejs
 - mysql2
