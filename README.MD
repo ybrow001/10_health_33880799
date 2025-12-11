@@ -10,7 +10,7 @@ To install and run this application, in the command line on the machine it is be
 
 - git clone https://github.com/ybrow001/10_health_33880799
 
-To install the necessary modules and packages - automatically specified by the accompanying .json files.
+To install the necessary modules and packages - automatically specified by the accompanying .json files:
 - npm install
 
 
