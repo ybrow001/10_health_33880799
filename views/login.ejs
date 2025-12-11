@@ -11,5 +11,8 @@
         <p>password: <input id="password" type="password" name="password"/></p>
         <input type="submit" value="login!"/>
     </form>
+    <% if(message != null) { %>
+      <p><%= message %></p>
+   <% } %>
   </body>
 </html>

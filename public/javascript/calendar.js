@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
         initialView: 'dayGridMonth',
         events: "./calendar/events",  // load events using GET route
         selectable: true,
-        eventTimeFormat: {
+        eventTimeFormat: { // 24 hour time
             hour: '2-digit',
             minute: '2-digit',
-            hour12: false // 24 hour time
+            hour12: false 
         },
     });
     calendar.render();
@@ -17,11 +17,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // displays form when a day in the calendar is clicked
     calendar.on('dateClick', function(info) {
         const modal = document.getElementById('event_modal');
-        modal.style.display = 'block';
+        modal.style.display = 'block'; // change for styling to display
         
-        document.getElementById('event_start').value = info.dateStr + 'T00:00'; // default start
+        document.getElementById('event_start').value = info.dateStr + 'T00:00'; // default time
     });
 
+    // communicate input data with route handlers, display on frontend
     document.getElementById('save_button').addEventListener('click', function() {
         const title = document.getElementById('event_title').value;
         const start = document.getElementById('event_start').value;
@@ -33,9 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({title, start, end, description})
         })
-        // fetch is an asynchronous promise, .then tells it (a promise) what to do next
         .then(res => res.json()) // get res.json from route handlers
-        .then(savedEvent => {
+        .then(savedEvent => { // .json saved data for FullCalendar
             calendar.addEvent({
                 id: savedEvent.eventId,
                 title: title,
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 description: description
             });
 
-            // hide reset form
+            // hide and reset form
             document.getElementById('event_modal').style.display = 'none';
             document.getElementById('event_title').value = '';
             document.getElementById('event_description').value = '';

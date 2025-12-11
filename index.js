@@ -56,14 +56,15 @@ app.use('/', mainRoutes);
 const searchRoutes = require('./routes/search');
 app.use('/search', searchRoutes);
 
+// use for signup, login, logout
 const userRoutes = require('./routes/users');
 app.use('/users', userRoutes);
 
-// -- user for timer and calendar
+// user for timer and calendar
 const toolRoutes = require('./routes/tools');
 app.use('/tools', toolRoutes);
 
-// -- use /resources to link information about meditation, sutras, etc?
+// use /resources to link information about meditation, sutras, etc
 const resourceRoutes = require('./routes/resources');
 app.use('/resources', resourceRoutes);
 

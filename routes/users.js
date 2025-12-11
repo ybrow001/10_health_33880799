@@ -4,6 +4,8 @@ const router = express.Router(); // create a new router
 const bcrypt = require('bcrypt');
 const {check, validationResult, body} = require('express-validator');
 
+const shopData = {shopName: "mustardseed"};
+
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId ) {
         res.redirect('./login') // redirect to the login page
@@ -18,12 +20,27 @@ router.get('/signup', function (req, res, next) {
 
 // add signedup w redirect to user profile (if auto log in) OR to login page
 router.post('/signedup', [
-    body('username').trim().isLength({min: 4, max: 20}).withMessage('must be 5-20 characters long'),
-    body('password').isLength({min: 4, max: 20}).withMessage('must be 8-24 characters long'),
-    body('email').trim().isEmail() /* .normalizeEmail() - removed to allow example emails */, 
-],
-    // due to sanitising before storing in database, if the resulting name is too long for VARCHAR(50) error is thrown
-    // to improve increase size of VARCHAR or change data type
+    body('username') // santise username to avoid XSS
+      .trim()
+      .escape()
+      .isLength({ min: 4, max: 20 })
+      .withMessage('username must be 4-20 characters long'),
+    body('password') // secure password check
+      .isStrongPassword({
+        minLength: 4,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage(
+        'password must be at least 4 characters long, including one each of uppercase, lowercase, number, and symbol'
+      ),
+    body('email') // ensure email is valid then sanitise
+      .trim()
+      .isEmail()
+      .normalizeEmail(),
+  ],
 function (req, res, next) {
     // saving data in database
     const saltRounds = 10;
@@ -33,9 +50,9 @@ function (req, res, next) {
     if(!errors.isEmpty()) {
         res.render('./signup');
     } else {
-        // bcrypt.hash() is an async func - so db.queury must be run inside it to store the hashed password
+        // encrypt password
         bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) { 
-            // Store hashed password in your database.
+            // store hashed password in your database.
             if(err) {
                 next(err);
             }
@@ -47,12 +64,20 @@ function (req, res, next) {
                 if(err) {
                     next(err)
                 } else {
-
-                    // -- direct to welcome page, user can navigate from there clearly
-
-                    result = `hello ${req.body.username} you are now registered! we will send you an email at ${req.body.email}. 
-                    your password is: ${req.body.password}, your hashed password is: ${hashedPassword}.`;
-                    res.send(result)
+                    res.send(`
+                        <!doctype html>
+                        <html>
+                            <head>
+                                <title>${shopData.shopName} welcome</title>
+                                <link rel="stylesheet"  type="text/css" href="/main.css" />
+                            </head>
+                            <body>
+                                <h1>${shopData.shopName}</h1>
+                                <p> hello, ${req.body.username}! welcome to ${shopData.shopName}! thank you for signing up!</p>
+                                <a href="/"> return home :) </a>
+                            </body>
+                        </html>
+                    `);
                 }
             });  
         })
@@ -60,12 +85,22 @@ function (req, res, next) {
 }); 
 
 router.get('/login', function (req, res, next) {
-    res.render('login.ejs')
+    res.render('login.ejs', {message: null});
 });
 
 router.post('/loggedin', [
-    check('username').isLength({min: 4, max: 20}),
-    check('password').isLength({min: 4, max: 50})
+    body('username').isLength({min: 4, max: 20}),
+    body('password') // secure password check
+      .isStrongPassword({
+        minLength: 4,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+      .withMessage(
+        'password must be at least 4 characters, including one each of uppercase, lowercase, number, and symbol'
+      ),
 ],
 function (req, res, next) {
     let username = req.body.username;
@@ -75,31 +110,24 @@ function (req, res, next) {
     let errors = validationResult(req);
 
     if(!errors.isEmpty()) {
-        res.render('./login');
+        res.render('./login', {message: 'the login credentials entered were incorrect or missing, please try again or make an account on our registration page :)'});
     } else {
         db.query(sqlQuery, [username], (err, rows) => {
             if(err) {
                 next(err)
             } else {
-                const userId = rows[0].id;
+                const userId = rows[0].id; // for use in session id
                 const hash = rows[0].hashed_password;
-                
             
                 bcrypt.compare(plainPassword, hash, function(err, result) {
                     if(err) {
                         next(err)
                     } else if(result == true) {
-                        const sanitisedUsername = req.sanitize(username); 
-
-                        // sanitise username before creating session and before displaying
-                        // maybe necessary for session - needed if displaying
-
                         req.session.userId = userId;
-                        res.send(`hello ${sanitisedUsername}, your login was successful!`)
-                        // render user profile
+                        res.render('index.ejs', {message: null}); // redirect to home page
                     } else {
                         // redirect to login page, inject message
-                        res.send(`the login credentials entered were incorrect, please try again or make an account on our registration page :)`)
+                        res.render('login.ejs', {message: 'the login credentials entered were incorrect or missing, please try again or make an account on our registration page :)'});
                     }   
                 })
             }
@@ -113,7 +141,21 @@ router.get('/logout', redirectLogin, (req,res) => {
         if(err) {
             return res.redirect('./')
         }
-        res.send("you've now been looged out")
+        // confirm logout, provide link back to home page
+        res.send(`
+            <!doctype html>
+            <html>
+                <head>
+                    <title>${shopData.shopName} log out</title>
+                    <link rel="stylesheet"  type="text/css" href="/main.css" />
+                </head>
+                <body>
+                    <h1>${shopData.shopName}</h1>
+                    <p>you've now been logged out, we're sad to see you go!</p>
+                    <a href="/"> return home :) </a>
+                </body>
+            </html>
+        `);
     })
 });
 
